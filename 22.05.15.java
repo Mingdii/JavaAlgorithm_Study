@@ -1,7 +1,25 @@
 import java.util.Scanner;
 
+// 퀵 정렬 알고리즘 보완(if문 추가)
+
 public class Main
 {
+    public static double[] swap(int j, double result[])
+	{
+	    double[] swpArr = new double[5];
+	    
+	    double temp = 0;
+		
+	    if(result[j-1] > result[j])
+		{
+    		 temp = result[j-1];
+    		 result[j-1] = result[j];
+    		  result[j] = temp;
+		}
+		
+		return swpArr;
+	}
+    
 	public static void main(String[] args) 
 	{
 	    // 10개의 정수를 담을 배열 선언
@@ -63,24 +81,6 @@ public class Main
         // 평균에서 arr[i] 뺀 값을 temp 배열에 저장하기
         for(int i=0; i<arr.length; i++)
         {
-            /* ① 방법
-            m = avg-arr[i];
-            
-            //System.out.println("m : " + m);
-            
-            temp[i] = m;
-            
-            for(double num : temp)
-            { 
-                System.out.println("num : " + num);
-            }
-            
-            // ② 방법
-            temp[i] = avg-arr[i];
-            
-            System.out.println("temp[i] : " + num);
-            */
-            
             temp[i] = avg-arr[i];
             
         }
@@ -98,6 +98,9 @@ public class Main
        
        double baseNum=0;
 
+      // temp[i]가 arr[i]와 인덱스가 같으므로 절대값 최소인 값에 해당할 때의 arr[인덱스] 값을 기준값에 넣기
+      // 그리고 absNumber < min 일 때의 최소값에 해당하는 absNumber 를 min 최소값 변수에 넣어주고
+      // 위의 absNumber = Math.abs(temp[i]); 구문으로 absNumber 새로받고 이전 absNumber 인 min 과 비교
 	   for(int i=0; i<temp.length; i++)
 		{
 			absNumber = Math.abs(temp[i]);
@@ -119,6 +122,8 @@ public class Main
 		{
 		    if(arr[i] < baseNum)
 		    {
+		        // result[i] = arr[i] 하는 경우, 위의 if 에 해당하지 않는 경우 뛰어넘기 때문에 result[i] 는 차례로가 아니라 
+		        // 듬성듬성 들어갈 수 있기 때문에 idx 인덱스를 따로 선언하여 차례로 들어갈 수 있도록 함.
 		        result[idx] = arr[i];
 		        idx++;
 		    }
@@ -142,33 +147,20 @@ public class Main
 		    System.out.println("result : " + num);
 		}
 		
-		double swap = 0;
-		
-		
 		for(int i=0; i<baseIdx; i++)
 		{
 		    for(int j=1; j<baseIdx-i; j++)
 		    {
-		        if(result[j-1] > result[j])
-		        {
-    		       swap = result[j-1];
-    		       result[j-1] = result[j];
-    		       result[j] = swap;
-		        }
+		        swap(j, result);
 		    }
 		}
 		
+		
 		for(int i=baseIdx+1; i<result.length; i++)
 		{
-		   
 		    for(int j=baseIdx+2; j<(result.length-i)+(baseIdx+1); j++)
 		    {
-		       if(result[j-1] > result[j])
-		        {
-    		       swap = result[j-1];
-    		       result[j-1] = result[j];
-    		       result[j] = swap;
-		        }
+		        swap(j, result);
 		    }
 		}
 		
@@ -177,4 +169,6 @@ public class Main
 		    System.out.println("result[" + i + "] : " + result[i]);
 		}
 	}
+	
+	
 }
